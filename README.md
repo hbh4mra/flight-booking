@@ -1,1 +1,1 @@
-# flight-booking
+# flight-bookings
