@@ -1,0 +1,58 @@
+Drop table LeadCustomer;
+Drop table Flight;
+Drop table FlightBooking;
+
+---------------------- CREATE TABLE ----------------------
+CREATE TABLE LeadCustomer 
+(
+	CustomerID INTEGER NOT NULL UNIQUE
+	CHECK (CustomerID > 1000 AND CustomerID < 2000),
+	FirstName VARCHAR(20)  NOT NULL,
+	Surname VARCHAR(40)  NOT NULL,
+	BillingAddress VARCHAR(200)  NOT NULL,
+	email  VARCHAR(30) NOT NULL,
+	CONSTRAINT CustomerID_PK1 PRIMARY KEY (CustomerID)
+);
+
+CREATE TABLE Flight 
+(
+	FlightID INTEGER NOT NULL UNIQUE
+	CHECK (FlightID > 2000 AND FlightID < 3000),
+	FlightDate TIMESTAMP NOT NULL, 
+	Origin VARCHAR(30) NOT NULL,
+	Destination VARCHAR(30) NOT NULL,
+	MaxCapacity INTEGER NOT NULL,
+	PricePerSeat DECIMAL NOT NULL DEFAULT 99.99
+	CHECK (PricePerSeat >= 99.99 AND PricePerSeat <= 10000.00),
+	CONSTRAINT FlightID_PK1 PRIMARY KEY (FlightID)
+);
+
+CREATE TABLE FlightBooking 
+(
+	BookingID INTEGER NOT NULL
+	CHECK (BookingID > 1 AND BookingID < 1000),
+	CustomerID INTEGER NOT NULL
+	CHECK (CustomerID > 1000 AND CustomerID < 2000),
+	FlightID INTEGER NOT NULL
+	CHECK (FlightID > 2000 AND FlightID < 3000), 
+	NumSeats INTEGER NOT NULL
+	CHECK (NumSeats > 1 AND NumSeats < 999),
+	Status CHAR(1) NOT NULL,
+	BookingTime TIMESTAMP NOT NULL,
+	TotalCost DECIMAL,
+	CONSTRAINT FlightBooking_PK1 PRIMARY KEY (CustomerID, FlightID)
+);
+
+---------------------- INSERT TO TABLE ----------------------
+INSERT INTO LeadCustomer VALUES(1259,'Jack', 'Jones', '25 Gover Road, Norwich, Norfolk, NR9 8XY', 'jones68@googlemail.com');
+INSERT INTO LeadCustomer VALUES(1987,'Tony', 'Dawnson', '99A Lane Avenue, London, RM3 2PO', 'tonyDwn@hotmail.co.uk');
+
+INSERT INTO Flight VALUES(2659,'2009-02-28 23:51:22', 'England', 'Mexico', 589, 99.99);
+INSERT INTO Flight VALUES(2001,'2013-10-06 16:30:00', 'Canada', 'Italy', 954, 2529.99);
+
+INSERT INTO FlightBooking VALUES(6,1256,2569,600,'w','2009-02-28 23:51:22', 56.12);
+
+---------------------- QUERIES ----------------------
+select * from LeadCustomer;
+select * from Flight;
+select * from FlightBooking;
